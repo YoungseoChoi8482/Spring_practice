@@ -1,11 +1,14 @@
 package me.choiyoungseo.springbootdeveloper.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import me.choiyoungseo.springbootdeveloper.domain.Article;
 import me.choiyoungseo.springbootdeveloper.dto.AddArticleRequest;
+import me.choiyoungseo.springbootdeveloper.dto.UpdateArticleRequest;
 import me.choiyoungseo.springbootdeveloper.repository.BlogRepository;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.util.List;
 
 @RequiredArgsConstructor // final이 붙거나 @NotNull이 붙은 필드의 생성자 추가
@@ -23,4 +26,26 @@ public class BlogService {
     public List<Article> findAll() {
         return blogRepository.findAll();
     }
+
+    public Article findById(long id)
+    {
+        return blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+    }
+
+    public void delete(long id)
+    {
+        blogRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Article update(long id, UpdateArticleRequest request) {
+        Article article = blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+
+        article.update(request.getTitle(), request.getContent());
+
+        return article;
+    }
+
 }
