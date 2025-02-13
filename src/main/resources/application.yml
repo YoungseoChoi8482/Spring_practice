@@ -21,3 +21,7 @@ spring:
     console:
       enabled: true
       path: /h2-console  # ✅ H2 콘솔 접속을 위한 경로 설정
+
+jwt:
+  issuer: ajufresh@gmail.com
+  secret_key: study-springboot
