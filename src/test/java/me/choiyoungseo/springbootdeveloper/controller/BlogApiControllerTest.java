@@ -46,7 +46,7 @@ class BlogApiControllerTest {
     public void mockMvcSetUP(){
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .build();
-        blogRepository.deleteAll();
+        blogRepository.deleteAll(); //매번 테스트간 간섭받지 않도록 초기화.
     }
 
 
@@ -81,7 +81,9 @@ class BlogApiControllerTest {
 
     @DisplayName("findAllArticles: 블로그 글 목록 조회에 성공한다.")
     @Test
-    public void findAllArticles() throws Exception{
+    public void findAllArticles() throws Exception  //perform(get(url)) 같은 부분에서 예외가 일어날 수 있기 떄문에
+    // 컴파일러 한테 미리 경고.
+    {
         //given
         final String url = "/api/articles";
         final String title = "title";
