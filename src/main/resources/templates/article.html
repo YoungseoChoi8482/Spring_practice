@@ -3,41 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <title>블로그 글</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/
-bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+    <style>
+        body {
+          font-family: 'Poppins', sans-serif;
+          background-color: #f8f9fa;
+          margin: 0;
+          padding: 0;
+        }
+        /* 헤더 영역: particles.js를 적용하여 우주 느낌 */
+        .header-container {
+          position: relative;
+          width: 100%;
+          height: 50vh; /* 화면의 절반 정도 높이 */
+          background-color: #000;
+          overflow: hidden;
+        }
+        #particles-js {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+        }
+        .header-overlay {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #fff;
+          text-align: center;
+          z-index: 1;
+        }
+        .header-overlay h1 {
+          font-size: 3rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+        .header-overlay p {
+          font-size: 1.25rem;
+        }
+        /* 글 영역: 흰색 배경에 깔끔한 레이아웃 */
+        .article-section {
+          background-color: #fff;
+          padding: 60px 0;
+        }
+        .article-content {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+        .article-header h1 {
+          font-size: 2.5rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+        .article-meta {
+          color: #6c757d;
+          font-style: italic;
+          margin-bottom: 1rem;
+        }
+        .article-body p {
+          font-size: 1.125rem;
+          line-height: 1.8;
+        }
+        .btn-group {
+          margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<div class="p-5 mb-5 text-center</> bg-light">
-    <h1 class="mb-3">My BLOG</h1>
-    <h4 class="mb-3">블로그에 오신 것을 환영합니다</h4>
-</div>
-
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-lg-8">
-            <article>
-                <input type="hidden" id="article-id" th:value="${article.id}">
-                <header class="mb-4">
-                    <h1 class="fw-bolder mb-1" th:text="${article.title}"></h1>
-                    <div class="text-muted fst-italic mb-2" th:text="|Posted on
-${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
-                </header>
-                <section class="mb-5">
-                    <p class="fs-5 mb-4" th:text="${article.content}"></p>
-                </section>
-                <button type="button" id="modify-btn"
-                        th:onclick="|location.href='@{/new-article?id={articleId}
-(articleId=${article.id})}'|"
-                        class="btn btn-primary btn-sm">수정</button>
-
-                <button type="button" id="delete-btn"
-                        class="btn btn-secondary btn-sm">삭제
-                </button>
-            </article>
-        </div>
+<!-- 헤더 영역 -->
+<div class="header-container">
+    <div id="particles-js"></div>
+    <div class="header-overlay">
+        <h1>My BLOG</h1>
+        <p>블로그에 오신 것을 환영합니다</p>
     </div>
 </div>
 
+<!-- 글 내용 영역 -->
+<section class="article-section">
+    <div class="container article-content">
+        <article>
+            <input type="hidden" id="article-id" th:value="${article.id}">
+            <header class="article-header mb-4">
+                <h1 th:text="${article.title}"></h1>
+                <div class="article-meta" th:text="|Posted on ${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
+            </header>
+            <section class="article-body mb-5">
+                <p th:text="${article.content}"></p>
+            </section>
+            <div class="btn-group">
+                <button type="button" id="modify-btn"
+                        th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|"
+                        class="btn btn-primary btn-sm">수정</button>
+                <button type="button" id="delete-btn"
+                        class="btn btn-secondary btn-sm">삭제</button>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- particles.js 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 120,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          }
+        },
+        "opacity": {
+          "value": 0.7,
+          "random": true,
+          "anim": {
+            "enable": false
+          }
+        },
+        "size": {
+          "value": 2,
+          "random": true,
+          "anim": {
+            "enable": false
+          }
+        },
+        "line_linked": {
+          "enable": false
+        },
+        "move": {
+          "enable": true,
+          "speed": 0.3,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out"
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false
+          },
+          "onclick": {
+            "enable": false
+          },
+          "resize": true
+        }
+      },
+      "retina_detect": true
+    });
+</script>
 
 <script src="/js/article.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
+</html>

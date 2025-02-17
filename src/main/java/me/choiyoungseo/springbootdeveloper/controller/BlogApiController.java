@@ -67,6 +67,8 @@ public class BlogApiController {
 
         return ResponseEntity.ok()
                 .body(updatedArticle);
+        //이 코드의 의미는 "업데이트가 성공적으로 완료되었으며,
+        // 업데이트된 데이터를 응답 본문(body)에 담아 클라이언트에게 반환한다"는 것!
     }
 
 
