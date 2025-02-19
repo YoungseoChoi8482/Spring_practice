@@ -30,10 +30,14 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "nickname", unique = true)
+    private String nickname;
+
     @Builder
-    public User(String email, String password, String auth) {
+    public User(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
     }
 
     @Override //권환 반환
@@ -81,4 +85,15 @@ public class User implements UserDetails {
         // 계정이 사용 가능한지 확인하는 로직
         return true; // true -> 사용가능
     }
+
+    //사용자 이름 변경
+    public User update(String nickname) {
+        this.nickname = nickname;
+
+        return this;
+    }
+
+
+
+
 }
